@@ -106,8 +106,8 @@ def constructModel() -> AgentModel:
             "num_nodes": 10,
             "graph_type": "complete",  # Options: "complete", "wheel", "cycle"
             # Parameters for "2007" variation
-            "a_objective": 0.19,
-            "b_objective": 0.71,
+            "a_objective": 0.5,
+            "b_objective": 0.51,
             "num_trials_per_step": 5,
             "max_prior_value": 4.0,
         }

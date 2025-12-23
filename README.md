@@ -36,7 +36,7 @@ This variation implements a multi-armed bandit problem where scientists:
 - `B Objective`: True success probability of methodology B (default: 0.71)
 - `Num Trials Per Step`: Number of trials per experiment (default: 5)
 - `Max Prior Value`: Maximum value for initial Beta distribution parameters (default: 4.0)
-- `graph_type`: Network structure - "complete", "cycle", or "wheel"
+- `Graph Type`: Network structure - "complete", "cycle", or "wheel"
 
 ## Agent Attributes
 
