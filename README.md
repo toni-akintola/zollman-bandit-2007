@@ -42,3 +42,5 @@ This variation implements a multi-armed bandit problem where scientists:
 
 Each scientist maintains:
 - `a_expectation`, `b_expectation`: Expected success rates for each methodology
+
+**Click the 'Visualizations' tab to get started.**
