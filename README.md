@@ -41,7 +41,4 @@ This variation implements a multi-armed bandit problem where scientists:
 ## Agent Attributes
 
 Each scientist maintains:
-
-- `a_alpha`, `a_beta`: Beta distribution parameters for methodology A
-- `b_alpha`, `b_beta`: Beta distribution parameters for methodology B
 - `a_expectation`, `b_expectation`: Expected success rates for each methodology
