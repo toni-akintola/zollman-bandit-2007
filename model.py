@@ -17,6 +17,7 @@ def generateInitialData(model: AgentModel):
         "a_beta": random.uniform(1e-5, max_prior),
         "b_alpha": random.uniform(1e-5, max_prior),
         "b_beta": random.uniform(1e-5, max_prior),
+        "current_action": "none"
     }
     # Ensure denominators are not zero
     a_denom = initial_data["a_alpha"] + initial_data["a_beta"]
@@ -48,10 +49,11 @@ def generateTimestepData(model: AgentModel):
         if node_data["a_expectation"] > node_data["b_expectation"]:
             chosen_arm = "a"
             objective = a_objective
+            node_data["current_action"] = "a"
         else:
             chosen_arm = "b"
             objective = b_objective
-
+            node_data["current_action"] = "b"
         # Run Trials
         successes = int(np.random.binomial(num_trials, objective))
         failures = max(0, num_trials - successes)
