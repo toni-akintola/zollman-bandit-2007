@@ -12,12 +12,19 @@ def generateInitialData(model: AgentModel):
     # Ensure max_prior is positive, default to a small value if not.
     if max_prior <= 0:
         max_prior = 1.0
+
+    a_objective = model["a_objective"]
+
+    # Agents already know the success rate of A, so set a_alpha and a_beta
+    # such that a_expectation = a_objective. Use a high precision to represent
+    # that agents already know this value with certainty.
+    precision = 1000.0  # High precision to represent known value
     initial_data = {
-        "a_alpha": random.uniform(1e-5, max_prior),
-        "a_beta": random.uniform(1e-5, max_prior),
+        "a_alpha": a_objective * precision,
+        "a_beta": (1.0 - a_objective) * precision,
         "b_alpha": random.uniform(1e-5, max_prior),
         "b_beta": random.uniform(1e-5, max_prior),
-        "current_action": "none"
+        "current_action": "none",
     }
     # Ensure denominators are not zero
     a_denom = initial_data["a_alpha"] + initial_data["a_beta"]
@@ -73,18 +80,17 @@ def generateTimestepData(model: AgentModel):
         sources = [node_id] + list(graph.neighbors(node_id))
 
         # 2. Absorb data from all sources
+        # Note: Agents already know A's success rate, so don't update a_alpha/a_beta
         for source_id in sources:
             result = step_results[source_id]
 
-            if result["arm"] == "a":
-                node_data["a_alpha"] += result["successes"]
-                node_data["a_beta"] += result["failures"]
-            else:
-                # Result was on arm B
+            if result["arm"] == "b":
+                # Only update beliefs about B, not A
                 node_data["b_alpha"] += result["successes"]
                 node_data["b_beta"] += result["failures"]
 
         # 3. Recalculate Expectations based on new total data
+        # a_expectation doesn't change because agents already know A's success rate
         a_denom = node_data["a_alpha"] + node_data["a_beta"]
         node_data["a_expectation"] = (
             node_data["a_alpha"] / a_denom if a_denom > 0 else 0
