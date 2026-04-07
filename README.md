@@ -1,6 +1,6 @@
 # Zollman Bandit Model (2007 Variation)
 
-A bandit model by [Kevin Zollman](https://www.kevinzollman.com/) exploring how network structure affects scientific communities' ability to reach accurate consensus. This is the **2007 variation** focusing on division of labor and cognitive diversity. View the full paper [here](https://www.kevinzollman.com/uploads/5/0/3/6/50361245/zollman_-_communication_structure.pdf).
+A bandit model by [Kevin Zollman](https://www.kevinzollman.com/) exploring how network structure affects scientific communities' ability to reach accurate consensus. This is the **2007 variation** focusing on division of labor and cognitive diversity. View the full paper <a href="https://www.kevinzollman.com/uploads/5/0/3/6/50361245/zollman_-_communication_structure.pdf" target="_blank" rel="noopener noreferrer">here</a>.
 
 ## Abstract
 
@@ -24,7 +24,7 @@ This variation implements a multi-armed bandit problem where scientists:
 
 ### Key Features
 
-- **Learning Mechanism**: Bayesian updating with Beta-Binomial conjugate priors
+- **Learning Mechanism**: Bayesian updating
 - **Decision Rule**: Choose methodology with higher expected value
 - **Information Sharing**: Agents observe neighbors' experimental outcomes
 - **Network Effects**: Different structures (complete, cycle, wheel) affect information flow
@@ -32,15 +32,15 @@ This variation implements a multi-armed bandit problem where scientists:
 ## Model Parameters
 
 - `Num Nodes`: Size of network (default: 10)
-- `A Objective`: True success probability of methodology A (default: 0.19)
-- `B Objective`: True success probability of methodology B (default: 0.71)
-- `Num Trials Per Step`: Number of trials per experiment (default: 5)
-- `Max Prior Value`: Maximum value for initial Beta distribution parameters (default: 4.0)
+- `A Objective`: True success probability of methodology A (default: 0.5). This success rate is known by the agents.
+- `B Objective`: True success probability of methodology B (default: 0.51). Agents do not know the success rate of B and gather evidence to estimate it.
+- `Num Trials Per Step`: Number of trials per experiment (default: 5), determines how much evidence is gathered each timestep.
+- `Max Prior Value`: Maximum value for initial Beta distribution parameters (default: 4.0), affects the interaction between priors and evidence.
 - `Graph Type`: Network structure - "complete", "cycle", or "wheel"
 
 ## Agent Attributes
 
 Each scientist maintains:
-- `a_expectation`, `b_expectation`: Expected success rates for each methodology
+- `a_expectation`, `b_expectation`: Expected success rates for each methodology. Scientists choose the methodology they currently think has a higher success rate.
 
 **Click the 'Visualizations' tab to get started.**
